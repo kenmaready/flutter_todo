@@ -4,24 +4,8 @@ import 'package:flutter/material.dart';
 import '../components/add_task_sheet.dart';
 import '../components/task_list.dart';
 import '../models/task_list_provider.dart';
-import '../models/task.dart';
 
-var testTasksList = [
-  Task(description: 'Clean cat'),
-  Task(description: 'Wash car'),
-  Task(description: 'Feed Dog', completed: true)
-];
-
-class TaskScreen extends StatefulWidget {
-  const TaskScreen({Key? key}) : super(key: key);
-
-  @override
-  State<TaskScreen> createState() => _TaskScreenState();
-}
-
-class _TaskScreenState extends State<TaskScreen> {
-  // List<Task> tasks = testTasksList;
-
+class TaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,13 +41,15 @@ class _TaskScreenState extends State<TaskScreen> {
                           color: Colors.black26)
                     ]),
               ),
-              Text(
-                '  ${context.watch<TaskListProvider>().tasks.length} Task${context.watch<TaskListProvider>().tasks.length == 1 ? '' : 's'}',
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w500),
-              ),
+              Consumer<TaskListProvider>(builder: (context, taskList, index) {
+                return Text(
+                  '  ${taskList.length} Task${taskList.length == 1 ? '' : 's'}',
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w500),
+                );
+              }),
             ]),
           ),
           Expanded(

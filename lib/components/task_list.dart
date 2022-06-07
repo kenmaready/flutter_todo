@@ -5,12 +5,7 @@ import '../models/task_list_provider.dart';
 import '../models/task.dart';
 import './task_tile.dart';
 
-class TaskList extends StatefulWidget {
-  @override
-  State<TaskList> createState() => _TaskListState();
-}
-
-class _TaskListState extends State<TaskList> {
+class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Task> tasks = context.watch<TaskListProvider>().tasks;
