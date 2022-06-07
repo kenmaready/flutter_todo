@@ -13,6 +13,11 @@ class TaskListProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void remove(Task task) {
+    _tasks.remove(task);
+    notifyListeners();
+  }
+
   void removeAt(int index) {
     _tasks.removeAt(index);
     notifyListeners();

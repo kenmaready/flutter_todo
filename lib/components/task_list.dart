@@ -16,7 +16,6 @@ class TaskList extends StatelessWidget {
         Task task = tasks[index];
         return TaskTile(
           task: task,
-          onDismiss: () => tasks.removeAt(index),
         );
       },
     );

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 //
+import '../models/task_list_provider.dart';
 import '../models/task.dart';
 
 class TaskTile extends StatefulWidget {
   final Task task;
-  final VoidCallback onDismiss;
-  const TaskTile({required this.task, required this.onDismiss});
+  const TaskTile({required this.task});
 
   @override
   State<TaskTile> createState() => _TaskTileState();
@@ -17,7 +18,8 @@ class _TaskTileState extends State<TaskTile> {
     return Dismissible(
       key: Key(widget.task.hashCode.toString()),
       direction: DismissDirection.endToStart,
-      onDismissed: (direction) => widget.onDismiss(),
+      onDismissed: (direction) =>
+          context.read<TaskListProvider>().remove(widget.task),
       background: Container(color: Colors.red.shade100),
       child: ListTile(
         title: Text(widget.task.description,
