@@ -1,7 +1,9 @@
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 //
 import '../components/add_task_sheet.dart';
 import '../components/task_list.dart';
+import '../models/task_list_provider.dart';
 import '../models/task.dart';
 
 var testTasksList = [
@@ -18,12 +20,7 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  List<Task> tasks = testTasksList;
-
-  void addNewTask(String description) {
-    tasks.add(Task(description: description));
-    setState(() {});
-  }
+  // List<Task> tasks = testTasksList;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +58,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     ]),
               ),
               Text(
-                '  ${tasks.length} Task${tasks.length == 1 ? '' : 's'}',
+                '  ${context.watch<TaskListProvider>().tasks.length} Task${context.watch<TaskListProvider>().tasks.length == 1 ? '' : 's'}',
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -79,7 +76,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   topRight: Radius.circular(18.0),
                 ),
               ),
-              child: TaskList(tasks: tasks),
+              child: TaskList(),
             ),
           ),
         ],
@@ -89,9 +86,7 @@ class _TaskScreenState extends State<TaskScreen> {
         onPressed: () => showModalBottomSheet(
             context: context,
             isScrollControlled: true,
-            builder: (context) => AddTaskSheet(
-                  onSubmitted: addNewTask,
-                )),
+            builder: (context) => AddTaskSheet()),
         mini: true,
         child: const Icon(
           Icons.add,

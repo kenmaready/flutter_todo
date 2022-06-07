@@ -1,15 +1,16 @@
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+//
+import '../models/task_list_provider.dart';
+import '../models/task.dart';
 
 class AddTaskSheet extends StatefulWidget {
-  final Function onSubmitted;
-  const AddTaskSheet({required this.onSubmitted});
-
   @override
   State<AddTaskSheet> createState() => _AddTaskSheetState();
 }
 
 class _AddTaskSheetState extends State<AddTaskSheet> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   String description = '';
 
   @override
@@ -54,7 +55,9 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
                   child: ElevatedButton(
                       onPressed: () {
                         if (description.isNotEmpty) {
-                          widget.onSubmitted(description);
+                          context
+                              .read<TaskListProvider>()
+                              .add(Task(description: description));
                           Navigator.pop(context);
                         }
                         _controller.clear();
@@ -63,7 +66,7 @@ class _AddTaskSheetState extends State<AddTaskSheet> {
                       style: ElevatedButton.styleFrom(
                         primary: Colors.orange.shade300,
                       ),
-                      child: Text('Add')),
+                      child: const Text('Add')),
                 ),
               ],
             ),
